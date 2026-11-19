@@ -27,6 +27,7 @@ jobs:
             fi
             rm -rf temp_extract "$ZIP_FILE"
           fi
+          touch .env.example
 
       - name: Auto-fix package names and clean template extras
         run: |
@@ -35,14 +36,14 @@ jobs:
           if [ -f "app/build.gradle.kts" ]; then
             sed -i 's/com\.example/com.raylan.refhessv300/g' app/build.gradle.kts
             sed -i '/com.google.gms.google-services/d' app/build.gradle.kts
-            sed -i '/com.google.android.libraries.mapsplatform.secrets-gradle-plugin/d' app/build.gradle.kts
+            sed -i '/secrets-gradle-plugin/d' app/build.gradle.kts
             sed -i '/signingConfig = signingConfigs.getByName("debug")/d' app/build.gradle.kts
             sed -i 's/compileSdk = [0-9]*/compileSdk = 36/g' app/build.gradle.kts
             sed -i 's/targetSdk = [0-9]*/targetSdk = 36/g' app/build.gradle.kts
           fi
           if [ -f "build.gradle.kts" ]; then
             sed -i '/com.google.gms.google-services/d' build.gradle.kts
-            sed -i '/com.google.android.libraries.mapsplatform.secrets-gradle-plugin/d' build.gradle.kts
+            sed -i '/secrets-gradle-plugin/d' build.gradle.kts
           fi
 
       - name: Set up JDK 17
